@@ -70,15 +70,14 @@
     <Compile Include="Migrations\201810031354465_AddCategoryDescription.Designer.cs">
       <DependentUpon>201810031354465_AddCategoryDescription.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810031649561_AddProductDescriptionManCodePrice.cs" />
+    <Compile Include="Migrations\201810031649561_AddProductDescriptionManCodePrice.Designer.cs">
+      <DependentUpon>201810031649561_AddProductDescriptionManCodePrice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="stylecop.json" />
-    <None Include="stylecop1.json" />
-    <None Include="stylecop2.json" />
-    <None Include="stylecop3.json" />
-    <None Include="stylecop4.json" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
@@ -90,6 +89,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810031354465_AddCategoryDescription.resx">
       <DependentUpon>201810031354465_AddCategoryDescription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810031649561_AddProductDescriptionManCodePrice.resx">
+      <DependentUpon>201810031649561_AddProductDescriptionManCodePrice.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
