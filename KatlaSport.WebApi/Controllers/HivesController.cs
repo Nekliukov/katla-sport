@@ -31,9 +31,10 @@ namespace KatlaSport.WebApi.Controllers
         [Route("")]
         [SwaggerResponse(HttpStatusCode.OK, Description = "Returns a list of hives.", Type = typeof(HiveListItem[]))]
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
-        public IHttpActionResult GetHives()
+        public async Task<IHttpActionResult> GetHivesAsync()
         {
-            var hives = _hiveService.GetHives();
+            // + ConfigureAwait(false) here and in next cases to avoid deadlock in our UI.
+            var hives = await _hiveService.GetHivesAsync().ConfigureAwait(false);
             return Ok(hives);
         }
 
@@ -42,9 +43,9 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.OK, Description = "Returns a hive.", Type = typeof(Hive))]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
-        public IHttpActionResult GetHive(int hiveId)
+        public async Task<IHttpActionResult> GetHiveAsync(int hiveId)
         {
-            var hive = _hiveService.GetHive(hiveId);
+            var hive = await _hiveService.GetHiveAsync(hiveId).ConfigureAwait(false);
             return Ok(hive);
         }
 
@@ -55,7 +56,7 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> GetHiveSections(int hiveId)
         {
-            var hive = await _hiveSectionService.GetHiveSectionsAsync(hiveId);
+            var hive = await _hiveSectionService.GetHiveSectionsAsync(hiveId).ConfigureAwait(false);
             return Ok(hive);
         }
 
@@ -64,9 +65,9 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.NoContent, Description = "Sets deleted status for an existed hive.")]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
-        public IHttpActionResult SetStatus([FromUri] int hiveId, [FromUri] bool deletedStatus)
+        public async Task<IHttpActionResult> SetStatusAsync([FromUri] int hiveId, [FromUri] bool deletedStatus)
         {
-            _hiveService.SetStatus(hiveId, deletedStatus);
+            await _hiveService.SetStatusAsync(hiveId, deletedStatus).ConfigureAwait(false);
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
         }
     }
