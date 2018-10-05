@@ -3,6 +3,6 @@ export class HiveSectionListItem {
 		public id: number,
 		public name: string,
 		public code: string,
-		piblic isDeleted: boolean
+		public isDeleted: boolean
     ) { }
 }
