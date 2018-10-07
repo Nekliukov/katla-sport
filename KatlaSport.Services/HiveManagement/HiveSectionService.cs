@@ -67,7 +67,7 @@ namespace KatlaSport.Services.HiveManagement
             }
 
             var dbHiveSection = dbHiveSections[0];
-            if (dbHiveSection.IsDeleted == deletedStatus)
+            if (dbHiveSection.IsDeleted != deletedStatus)
             {
                 dbHiveSection.IsDeleted = deletedStatus;
                 dbHiveSection.LastUpdated = DateTime.UtcNow;
