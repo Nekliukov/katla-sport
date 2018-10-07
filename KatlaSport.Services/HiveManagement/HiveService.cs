@@ -129,7 +129,7 @@ namespace KatlaSport.Services.HiveManagement
             }
 
             var dbHive = dbHives[0];
-            if (dbHive.IsDeleted == deletedStatus)
+            if (dbHive.IsDeleted != deletedStatus)
             {
                 dbHive.IsDeleted = deletedStatus;
                 dbHive.LastUpdated = DateTime.UtcNow;
