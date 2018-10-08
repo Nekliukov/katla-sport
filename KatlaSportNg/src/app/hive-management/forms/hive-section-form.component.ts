@@ -25,10 +25,7 @@ export class HiveSectionFormComponent implements OnInit {
       if(p.id === undefined) 
         this.isNewSection = true
       else
-      {
         this.service.getHiveSection(p.id).subscribe(h => this.hiveSection = h);
-      }
-      // Needs here anyway, because Update or Add methods requires hive store id in request
       this.hiveSection.storeHiveId = this.hiveId;
     })
   }
@@ -42,6 +39,8 @@ export class HiveSectionFormComponent implements OnInit {
   }
 
   onSubmit(){
+    // Needs here anyway, because Update or Add methods requires hive store id in request
+    this.hiveSection.storeHiveId = this.hiveId;
     this.isNewSection ? this.service.addHiveSection(this.hiveSection).subscribe(s => this.navigateToHiveSections()):
       this.service.updateHiveSection(this.hiveSection).subscribe(s => this.navigateToHiveSections());
   }
