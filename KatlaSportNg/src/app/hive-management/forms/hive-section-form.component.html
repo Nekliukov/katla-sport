@@ -36,6 +36,9 @@
     </div>
   </form>
 
+  <div class="alert alert-warning"*ngIf="hasConflict">
+    Such hive section is already exists! "Hive section code" field must be unique.
+  </div>
     <div class="btn-toolbar" role="toolbar" aria-label="Action buttons" >
       <div class="btn-group mr-4" role="group" aria-label="New group" (click)="onCancel()">
         <button type="button" class="btn btn-primary">Back to hive section list</button>

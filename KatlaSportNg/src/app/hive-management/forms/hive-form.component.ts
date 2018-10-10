@@ -8,10 +8,12 @@ import { Hive } from '../models/hive';
   templateUrl: './hive-form.component.html',
   styleUrls: ['./hive-form.component.css']
 })
-export class HiveFormComponent implements OnInit {
 
+export class HiveFormComponent implements OnInit {
   hive = new Hive(0, "", "", "", false, "");
   existed = false;
+  hasConflict = false;
+  conflictDelayMs = 300;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,8 +38,14 @@ export class HiveFormComponent implements OnInit {
   }
   
   onSubmit() {
-    this.existed ? this.hiveService.updateHive(this.hive).subscribe(s => this.navigateToHives()):
-                   this.hiveService.addHive(this.hive).subscribe(s => this.navigateToHives())
+    this.existed ? this.hiveService.updateHive(this.hive).subscribe(
+      ok => this.navigateToHives(),
+      error => this.setConflictExistion()
+    ):
+    this.hiveService.addHive(this.hive).subscribe(
+      ok => this.navigateToHives(),
+      error => this.setConflictExistion()
+    )
   }
 
   onDelete() {
@@ -50,5 +58,11 @@ export class HiveFormComponent implements OnInit {
 
   onPurge() {
     this.hiveService.deleteHive(this.hive.id).subscribe(s => this.navigateToHives());
+  }
+
+  private setConflictExistion(){
+    this.hasConflict = false;
+    // Delay here for user, just to detect for eye error's occurring
+    window.setTimeout( ()=> { this.hasConflict = true }, this.conflictDelayMs);
   }
 }

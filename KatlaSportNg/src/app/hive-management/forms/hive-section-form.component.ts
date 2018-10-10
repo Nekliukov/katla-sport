@@ -12,7 +12,10 @@ export class HiveSectionFormComponent implements OnInit {
 
   hiveSection = new HiveSection(0,"","",0,false,"");
   hiveId: number;
-  isNewSection = false; 
+  hasConflict = false;
+  conflictDelayMs = 300;
+  isNewSection =  false;
+   
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -41,8 +44,14 @@ export class HiveSectionFormComponent implements OnInit {
   onSubmit(){
     // Needs here anyway, because Update or Add methods requires hive store id in request
     this.hiveSection.storeHiveId = this.hiveId;
-    this.isNewSection ? this.service.addHiveSection(this.hiveSection).subscribe(s => this.navigateToHiveSections()):
-      this.service.updateHiveSection(this.hiveSection).subscribe(s => this.navigateToHiveSections());
+      this.isNewSection ? this.service.addHiveSection(this.hiveSection).subscribe(
+        ok => this.navigateToHiveSections(),
+        error => this.setConflictExistion()
+      ):      
+      this.service.updateHiveSection(this.hiveSection).subscribe(
+        ok => this.navigateToHiveSections(),
+        error => this.setConflictExistion()
+      );
   }
 
   onDelete() {
@@ -56,7 +65,14 @@ export class HiveSectionFormComponent implements OnInit {
     this.service.deleteHiveSection(this.hiveSection.id).subscribe(s => this.navigateToHiveSections());
   }
 
+  private setConflictExistion(){
+    this.hasConflict = false;
+    // Delay here for user, just to detect for eye error's occurring
+    window.setTimeout( ()=> { this.hasConflict = true }, conflictDelayMs);
+  }
+
   private setStatus(status: boolean){
-    this.service.setHiveSectionStatus(this.hiveSection.id, status).subscribe(h => this.hiveSection.isDeleted = status);
+    this.service.setHiveSectionStatus(this.hiveSection.id, status)
+      .subscribe(h => this.hiveSection.isDeleted = status);
   }
 }
